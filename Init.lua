@@ -86,7 +86,7 @@ Functions["FindPlayer"] = function(Name)
     end
 end
 
-Functions["GetMass"] = function(Model)
+Functions["GetMass"] = function(Type, Model)
     local Mass = 0;
     if Type == "Assembly" then
         for I, V in pairs(Model:GetDescendants()) do
