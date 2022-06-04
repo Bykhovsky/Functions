@@ -65,8 +65,8 @@ end
 Functions["CheckAssetId"] = function(ID, Type)
 	local AssetId = nil
 	local Success, Result = pcall(function()
-		return Services["MPS"]:GetProductInfo(ID, Enum["InfoType"]["Asset"])
-	end); if Success then AssetId = Services["MarketplaceService"]:GetProductInfo(ID)
+		return Functions["Services"]["MarketplaceService"]:GetProductInfo(ID, Enum["InfoType"]["Asset"])
+	end); if Success then AssetId = Functions["Services"]["MarketplaceService"]:GetProductInfo(ID)
 		if AssetId and AssetId["AssetTypeId"] == Type then return true
 		elseif AssetId["AssetTypeId"] ~= Type then return false end
 		elseif not Success then return false
@@ -81,7 +81,7 @@ end
 
 Functions["FindPlayer"] = function(Name)
     Name = Name:lower()
-    for I, V in pairs(Services["Players"]:GetPlayers()) do
+    for I, V in pairs(Functions["Services"]["Players"]:GetPlayers()) do
         if Name == (V["Name"]:lower()):sub(1, #Name) or Name == (V["DisplayName"]:lower()):sub(1, #Name) then return V end
     end
 end
@@ -110,15 +110,15 @@ Functions["LerpCalc"] = function(A, B, T)
 end
 
 Functions["URLEncode"] = function(Input)
-    return Services["HttpService"]:UrlEncode(Input)
+    return Functions["Services"]["HttpService"]:UrlEncode(Input)
 end
 
 Functions["JSONEncode"] = function(Input)
-    return Services["HttpService"]:JSONEncode(Input)
+    return Functions["Services"]["HttpService"]:JSONEncode(Input)
 end
 
 Functions["JSONDecode"] = function(Input)
-    return Services["HttpService"]:JSONDecode(Input)
+    return Functions["Services"]["HttpService"]:JSONDecode(Input)
 end
 
 return Functions
