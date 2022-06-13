@@ -1,1 +1,1 @@
-print(os.getenv("Alpha"))
+print(os.getenv("ALPHA"))
