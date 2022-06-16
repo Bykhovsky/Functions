@@ -86,6 +86,27 @@ Functions["FindPlayer"] = function(Name)
     end
 end
 
+Functions["GetClosestPlayer"] = function(Range)
+	local Closest, MousePos = {nil, nil}, Vector2.new(Functions["Services"]["Players"]["LocalPlayer"]:GetMouse()["X"], Functions["Services"]["Players"]["LocalPlayer"]:GetMouse()["Y"])
+	local Players = {}; for I, V in pairs(Functions["Services"]["Players"]:GetPlayers()) do
+		table.insert(Players, V)
+	end; for I, V in pairs(Players) do
+		if V == Functions["Services"]["Players"]["LocalPlayer"] then continue end
+		local Character = V["Character"]
+		if Character then
+			local Root = V["Character"]:FindFirstChild("HumanoidRootPart")
+			if Root then
+				local Vector, OnScreen = Functions["Services"]["Workspace"]["CurrentCamera"]:WorldToScreenPoint(Root["Position"])
+				if OnScreen and (Root["Position"] - Functions["Services"]["Players"]["LocalPlayer"]["Character"]["Humanoid"]["RootPart"]["Position"])["Magnitude"] <= Range then
+					local Distance = (MousePos - Vector2.new(Vector["X"], Vector["Y"]))["Magnitude"]
+					if Closest[1] == nil then Closest = {Distance, V} continue end
+					if Distance < Closest[1] then Closest = {Distance, V} end
+				end
+			end
+		end
+	end; return Closest
+end
+
 Functions["GetMass"] = function(Type, Model)
     local Mass = 0;
     if Type == "Assembly" then
