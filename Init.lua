@@ -1,31 +1,31 @@
 local Functions = {}
 
 Functions["Services"] = setmetatable({}, {
-    __index = function(self, I)
-        if pcall(function() game:FindService(I) end) then
-            return game:GetService(I)
-        end
-    end,
+	__index = function(self, I)
+		if pcall(function() game:FindService(I) end) then
+			return game:GetService(I)
+		end
+	end,
 })
 
 Functions["Create"] = function(Class, Properties)
-    local Obj, Properties = Instance.new(Class), Properties or {}
-    for I, V in pairs(Properties) do if rawequal(I, "Parent") then continue end Obj[I] = V; end
-    if Properties["Parent"] then Obj["Parent"] = Properties["Parent"] end; return Obj
+	local Obj, Properties = Instance.new(Class), Properties or {}
+	for I, V in pairs(Properties) do if rawequal(I, "Parent") then continue end Obj[I] = V; end
+	if Properties["Parent"] then Obj["Parent"] = Properties["Parent"] end; return Obj
 end
 
 Functions["Tween"] = function(Obj, Time, Style, Direction, Goal)
-    local T = Functions["Services"]["TweenService"]:Create(
-        Obj, TweenInfo.new(Time, Enum["EasingStyle"][Style], Enum["EasingDirection"][Direction]), Goal
-    ); T:Play(); return T
+	local T = Functions["Services"]["TweenService"]:Create(
+		Obj, TweenInfo.new(Time, Enum["EasingStyle"][Style], Enum["EasingDirection"][Direction]), Goal
+	); T:Play(); return T
 end
 
 Functions["Yield"] = function(Amount)
-    local Index = 0
-    repeat 
-        game["RobloxReplicatedStorage"]["GetServerVersion"]:InvokeServer()
-        Index = Index + 1
-    until Index >= Amount
+	local Index = 0
+	repeat 
+		game["RobloxReplicatedStorage"]["GetServerVersion"]:InvokeServer()
+		Index = Index + 1
+	until Index >= Amount
 end
 
 Functions["Clock"] = function(Time, Type)
@@ -69,21 +69,21 @@ Functions["CheckAssetId"] = function(ID, Type)
 	end); if Success then AssetId = Functions["Services"]["MarketplaceService"]:GetProductInfo(ID)
 		if AssetId and AssetId["AssetTypeId"] == Type then return true
 		elseif AssetId["AssetTypeId"] ~= Type then return false end
-		elseif not Success then return false
+	elseif not Success then return false
 	end
 end
 
 Functions["HasProperty"] = function(Obj, Property)
-    if pcall(function() local T = Obj[Property] end) then
-        return true else return false
-    end
+	if pcall(function() local T = Obj[Property] end) then
+		return true else return false
+	end
 end
 
 Functions["FindPlayer"] = function(Name)
-    Name = Name:lower()
-    for I, V in pairs(Functions["Services"]["Players"]:GetPlayers()) do
-        if Name == (V["Name"]:lower()):sub(1, #Name) or Name == (V["DisplayName"]:lower()):sub(1, #Name) then return V end
-    end
+	Name = Name:lower()
+	for I, V in pairs(Functions["Services"]["Players"]:GetPlayers()) do
+		if Name == (V["Name"]:lower()):sub(1, #Name) or Name == (V["DisplayName"]:lower()):sub(1, #Name) then return V end
+	end
 end
 
 Functions["GetClosestPlayer"] = function(Range)
@@ -108,38 +108,38 @@ Functions["GetClosestPlayer"] = function(Range)
 end
 
 Functions["GetMass"] = function(Type, Model)
-    local Mass = 0;
-    if Type == "Assembly" then
-        for I, V in pairs(Model:GetDescendants()) do
-            if V:IsA("BasePart") then Mass = Mass + V["AssemblyMass"] end
-        end
-    elseif Type == "Regular" then
-        for I, V in pairs(Model:GetDescendants()) do
-            if V:IsA("BasePart") then Mass = Mass + V:GetMass() end
-        end
-    end; return Mass;
+	local Mass = 0;
+	if Type == "Assembly" then
+		for I, V in pairs(Model:GetDescendants()) do
+			if V:IsA("BasePart") then Mass = Mass + V["AssemblyMass"] end
+		end
+	elseif Type == "Regular" then
+		for I, V in pairs(Model:GetDescendants()) do
+			if V:IsA("BasePart") then Mass = Mass + V:GetMass() end
+		end
+	end; return Mass;
 end
 
 Functions["CheckMouseInFrame"] = function(Frame)
-	local Y = Frame["AbsolutePosition"]["Y"] <= Mouse["Y"] and Mouse["Y"] <= Frame["AbsolutePosition"]["Y"] + Frame["AbsoluteSize"]["Y"]
-	local X = Frame["AbsolutePosition"]["X"] <= Mouse["X"] and Mouse["X"] <= Frame["AbsolutePosition"]["X"] + Frame["AbsoluteSize"]["X"]
+	local Y = Frame["AbsolutePosition"]["Y"] <= Functions["Services"]["Players"]["LocalPlayer"]:GetMouse()["Y"] and Functions["Services"]["Players"]["LocalPlayer"]:GetMouse()["Y"] <= Frame["AbsolutePosition"]["Y"] + Frame["AbsoluteSize"]["Y"]
+	local X = Frame["AbsolutePosition"]["X"] <= Functions["Services"]["Players"]["LocalPlayer"]:GetMouse()["X"] and Functions["Services"]["Players"]["LocalPlayer"]:GetMouse()["X"] <= Frame["AbsolutePosition"]["X"] + Frame["AbsoluteSize"]["X"]
 	return (Y and X)
 end
 
 Functions["LerpCalc"] = function(A, B, T)
-    return A + (B - A) * T
+	return A + (B - A) * T
 end
 
 Functions["URLEncode"] = function(Input)
-    return Functions["Services"]["HttpService"]:UrlEncode(Input)
+	return Functions["Services"]["HttpService"]:UrlEncode(Input)
 end
 
 Functions["JSONEncode"] = function(Input)
-    return Functions["Services"]["HttpService"]:JSONEncode(Input)
+	return Functions["Services"]["HttpService"]:JSONEncode(Input)
 end
 
 Functions["JSONDecode"] = function(Input)
-    return Functions["Services"]["HttpService"]:JSONDecode(Input)
+	return Functions["Services"]["HttpService"]:JSONDecode(Input)
 end
 
 Functions["Click"] = function(CD, Dist) fireclickdetector(CD, Dist) end
