@@ -142,4 +142,8 @@ Functions["JSONDecode"] = function(Input)
     return Functions["Services"]["HttpService"]:JSONDecode(Input)
 end
 
+Functions["Click"] = function(CD, Dist) fireclickdetector(CD, Dist) end
+Functions["Touch"] = function(Self, BP, Num) firetouchinterest(Self, BP, Num) end
+Functions["Proxy"] = function(PP, Num) fireproximityprompt(PP, Num) end
+
 return Functions
