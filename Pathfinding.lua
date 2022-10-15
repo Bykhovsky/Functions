@@ -196,11 +196,9 @@ end
 
 --[[ CONSTRUCTOR ]]--
 function Path.new(agent, agentParameters, override)
-	print("attempting at creating a path")
 	if not (agent and agent:IsA("Model") and agent.PrimaryPart) then
 		output(error, "Pathfinding agent must be a valid Model Instance with a set PrimaryPart.")
 	end
-	print("path creation continue")
 	local self = setmetatable({
 		_settings = override or DEFAULT_SETTINGS;
 		_events = {
@@ -233,7 +231,6 @@ function Path.new(agent, agentParameters, override)
 			self._events.Blocked:Fire(self._agent, self._waypoints[...])
 		end
 	end)
-	print("path created!")
 	return self
 end
 
@@ -273,7 +270,6 @@ function Path:Stop()
 end
 
 function Path:Run(target)
-	print("running")
 	--Non-humanoid handle case
 	if not target and not self._humanoid and self._target then
 		moveToFinished(self, true)
